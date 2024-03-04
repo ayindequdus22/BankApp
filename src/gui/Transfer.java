@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Transfer extends JFrame {
-    private JTextField fromAccountField;
+    private JTextField Field;
     private JTextField toAccountField;
     private JTextField amountField;
     private JButton transferButton;
@@ -17,22 +17,22 @@ public class Transfer extends JFrame {
         setLocation(500, 250);
         setVisible(true);
         setResizable(false);
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JPanel mainPanel = new JPanel(new GridLayout(4, 2));
         JPanel buttonPanel = new JPanel();
         add(mainPanel);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        JLabel fromLabel = new JLabel("From Account:");
-        fromAccountField = new JTextField(10);
+        JLabel balance = new JLabel("Balance:");
+       JLabel balanceLabel = new JLabel("$5000");
         JLabel toLabel = new JLabel("To Account:");
         toAccountField = new JTextField(10);
         JLabel amountLabel = new JLabel("Amount:");
         amountField = new JTextField(10);
         transferButton = new JButton("Transfer");
 
-        mainPanel.add(fromLabel);
-        mainPanel.add(fromAccountField);
+        mainPanel.add(balance);
+        mainPanel.add(balanceLabel);
         mainPanel.add(toLabel);
         mainPanel.add(toAccountField);
         mainPanel.add(amountLabel);
@@ -47,19 +47,21 @@ public class Transfer extends JFrame {
             }
         });
     }
-
+    @Override
+    public void dispose() {
+        super.dispose(); // Call the superclass method
+        new Home().setVisible(true); // Open the home page when the transfer page is closed
+    }
     private void transferMoney() {
-        String fromAccount = fromAccountField.getText();
         String toAccount = toAccountField.getText();
         String amountText = amountField.getText();
     
-        if (fromAccount.isEmpty() || toAccount.isEmpty() || amountText.isEmpty()) {
+        if (toAccount.isEmpty() || amountText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 double amount = Double.parseDouble(amountText);
-                System.out.println("Transfer from " + fromAccount + " to " + toAccount + " amount: $" + amount);
-                fromAccountField.setText("");
+                JOptionPane.showMessageDialog(this,"Transfer from " +   " to " + toAccount + " amount: $" + amount);
                 toAccountField.setText("");
                 amountField.setText(""); 
                 dispose();
@@ -68,5 +70,4 @@ public class Transfer extends JFrame {
             }
         }
     }
-            
-    }
+          }

@@ -11,7 +11,16 @@ public class Transactions extends JFrame {
         setLocation(500,250);
         setVisible(true);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        
         JPanel mainPanel = new JPanel(new BorderLayout());
         add(mainPanel);
+        
+    }
+    @Override
+    public void dispose() {
+        super.dispose(); // Call the superclass method
+        new Home();
     }
 }

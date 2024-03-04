@@ -1,6 +1,5 @@
 package gui;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,6 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.net.URL;
+import javax.imageio.ImageIO;
+
+
 
 public class SignUpPage extends JFrame implements ActionListener {
 
@@ -15,7 +18,7 @@ public class SignUpPage extends JFrame implements ActionListener {
     private JPasswordField PasswordField;
     private JButton signupButton, loginButton;
     private JLabel FirstNameLabel, LastNameLabel, UserNameLabel, PasswordLabel, EmailLabel;
-    private JPanel panel;
+    private JPanel panel,Imgpanel;
 
     Connection conn;
     Statement st;
@@ -27,8 +30,26 @@ public class SignUpPage extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(500, 250);
         setResizable(false);
+
+
         panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
+
+        Imgpanel = new JPanel();
+
+        try {
+            URL imageUrl = getClass().getResource("src/images/logo.png");
+            if (imageUrl != null) {
+                Image img = ImageIO.read(imageUrl);
+                JLabel imageLabel = new JLabel(new ImageIcon(img));
+                Imgpanel.add(imageLabel);
+            } else {
+                System.err.println("Image not found.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
 
         FirstNameLabel = new JLabel("First Name:");
         LastNameLabel = new JLabel("Last Name:");
@@ -67,6 +88,7 @@ public class SignUpPage extends JFrame implements ActionListener {
         panel.add(signupButton);
         panel.add(loginButton);
         setVisible(true);
+        add(Imgpanel);
         add(panel);
     }
 
@@ -111,4 +133,5 @@ public class SignUpPage extends JFrame implements ActionListener {
             e.printStackTrace();
         }
     }
+ 
 }

@@ -16,6 +16,9 @@ public class Deposit extends JFrame {
         setLocation(500, 250);
         setVisible(true);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
         JPanel mainPanel = new JPanel(new GridLayout(3, 2));
         JPanel buttonPanel = new JPanel();
         add(mainPanel);
@@ -46,14 +49,18 @@ public class Deposit extends JFrame {
         } else {
             try {
                 double amount = Double.parseDouble(amountTobeDeposited.getText());
-                System.out.println(amount);
-               
+                JOptionPane.showMessageDialog(this,"Deposited  "   + amount);
+            
                 dispose();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid amount", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-       
-  
+     @Override
+    public void dispose() {
+        super.dispose(); // Call the superclass method
+        new Home();
+    }   
+
 }

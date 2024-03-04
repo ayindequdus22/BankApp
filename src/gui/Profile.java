@@ -24,5 +24,9 @@ public class Profile extends JFrame {
         setVisible(true);
         setResizable(false);
     }
-
+    @Override
+    public void dispose() {
+        super.dispose();
+        new Home();
+    }
 }

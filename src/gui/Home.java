@@ -4,9 +4,6 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 public class Home extends JFrame implements ActionListener{
-   
-
-    private JFrame currentFrame;
 
     public Home() {
         setVisible(true);
@@ -52,15 +49,16 @@ public class Home extends JFrame implements ActionListener{
         add(mainPanel);
 
         // Set initial current frame as the main frame
-        currentFrame = this;
+        // currentFrame = this;
 
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 // Close other pages when main frame gains focus
-                if (currentFrame != null && currentFrame != Home.this) {
-                    currentFrame.dispose();
-                }
+                // if (currentFrame != null && currentFrame != Home.this) {
+                //     currentFrame.dispose();
+                //     currentFrame.setVisible(false);
+                // }
             }
         });
     }
@@ -69,23 +67,26 @@ public class Home extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton)e.getSource();
         if (source.getText().equals("View Balance")) {
-            currentFrame = new ViewBalance();
+            setVisible(false);
+          new ViewBalance();
         } else if (source.getText().equals("Deposit")) {
-            currentFrame = new Deposit();
+            setVisible(false);
+            new Deposit();
         } else if (source.getText().equals("Transfer")) {
-            currentFrame = new Transfer();
+            setVisible(false);
+             new Transfer();
         } else if (source.getText().equals("Withdrawal")) {
-            currentFrame = new Withdrawal();
+            setVisible(false);
+            new Withdrawal();
         } else if (source.getText().equals("Transactions")) {
-            currentFrame = new Transactions();
+            setVisible(false);
+            new Transactions();
         } else if (source.getText().equals("Profile")) {
-            currentFrame = new Profile();
+            setVisible(false);
+            new Profile();
         }
     }
 
-//     // public static void main(String[] args) {
-//     //     new Main();
-//     // }
-// }
+ 
 
 }
