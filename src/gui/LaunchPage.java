@@ -26,7 +26,7 @@ public class LaunchPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //Note: I increased the image size by 10 each second
                 imageSize += 10;
-                if (imageSize >= 300){
+                if (imageSize >= 250){
                     //Note: If the image size gets to 300, stop the timer
                     timer.stop();
                     navigateToNextPage();
