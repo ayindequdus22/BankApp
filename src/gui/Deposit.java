@@ -26,7 +26,7 @@ public class Deposit extends JFrame {
         mainPanel.add(amountTobeDepositedLabel);
         mainPanel.add(amountTobeDeposited);
 
-        JButton depositButton = new JButton("Transfer");
+        JButton depositButton = new JButton("Deposit");
         depositButton.setPreferredSize(new Dimension(400, 30));
         depositButton.addActionListener(new ActionListener() {
 

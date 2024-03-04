@@ -51,6 +51,7 @@ public class SignInPage extends JFrame implements ActionListener {
 
             // Perform SignInPage validation (not implemented in this basic example)
             if (validateSignInPage(username, password)) {
+                setVisible(false);
                 new Home();
                 // JOptionPane.showMessageDialog(this, "SignInPage Successful");
             } else {
@@ -58,6 +59,7 @@ public class SignInPage extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == signupButton) {
             // Here you can open a new window for signup or handle signup process
+            setVisible(false);
             new SignUpPage();
             // JOptionPane.showMessageDialog(this, "Signup feature not implemented yet");
         }
