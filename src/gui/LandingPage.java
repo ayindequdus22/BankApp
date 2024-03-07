@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +38,9 @@ public class LandingPage extends JFrame {
         panel.add(titleLabel);
 
         JButton loginButton = new JButton("Login");
+        loginButton.setBackground(new Color(255, 165, 0));
+        loginButton.setFocusPainted(false);
+        loginButton.setForeground(Color.white);
         loginButton.setBounds(150, 200, 100, 50); // Example position and size
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -49,6 +54,9 @@ public class LandingPage extends JFrame {
 
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.setBounds(150, 300, 100, 50); // Example position and size
+        signUpButton.setBackground(new Color(255, 136, 0));
+        signUpButton.setFocusPainted(false);
+        signUpButton.setForeground(Color.white);
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,5 +78,5 @@ public class LandingPage extends JFrame {
         setSize(400, 500);
         setVisible(true);
     }
-   
+
 }

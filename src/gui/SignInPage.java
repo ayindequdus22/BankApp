@@ -4,6 +4,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,29 +17,48 @@ public class SignInPage extends JFrame implements ActionListener {
     private JPasswordField passwordField;
     private JButton loginButton, signupButton;
     private JLabel usernameLabel, passwordLabel;
-    private JPanel panel;
+    private JPanel panel, Imgpanel;
+
 
     Connection conn;
     Statement st;
 
     public SignInPage() {
-
+      
         setTitle("Login");
-        setSize(400, 200);
+        setSize(400, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(500, 250);
+        setLocationRelativeTo(null);
         setResizable(false);
+        setLayout(new BorderLayout());
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
+        Imgpanel = new JPanel();
+        Imgpanel.setPreferredSize(new Dimension(400, 400));
+   try {
+            URL imageUrl = getClass().getResource("/images/logo.png"); // Corrected resource path
+            if (imageUrl != null) {
+                ImageIcon image = new ImageIcon(imageUrl);
+                JLabel imageLabel = new JLabel(image);
+                Imgpanel.add(imageLabel);
+            } else {
+                System.err.println("Image not found.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         usernameLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
-
         usernameField = new JTextField();
+        usernameField.setPreferredSize(new Dimension(200, 60));
         passwordField = new JPasswordField();
         loginButton = new JButton("Login");
         signupButton = new JButton("Signup");
-
+        loginButton.setBackground(new Color(255, 50, 0));
+        loginButton.setForeground(Color.white);
+        signupButton.setBackground(new Color(255, 50, 0));
+        signupButton.setForeground(Color.white);
 
         loginButton.addActionListener(this);
         // Add action listener to the signupButton
@@ -57,7 +77,13 @@ public class SignInPage extends JFrame implements ActionListener {
         panel.add(loginButton);
         panel.add(signupButton);
         setVisible(true);
-        add(panel);
+      
+        JPanel spacePanel = new JPanel();
+        spacePanel.setPreferredSize(new Dimension(400, 10)); // Adjust the height as needed
+        setLayout(new BorderLayout());
+        add(Imgpanel, BorderLayout.NORTH);
+        add(spacePanel, BorderLayout.CENTER);
+        add(panel, BorderLayout.SOUTH);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -97,5 +123,8 @@ public class SignInPage extends JFrame implements ActionListener {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+    public static void main(String[] args) {
+        new SignInPage();
     }
 }
