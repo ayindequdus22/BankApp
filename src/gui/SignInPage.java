@@ -124,7 +124,4 @@ public class SignInPage extends JFrame implements ActionListener {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-        new SignInPage();
-    }
 }

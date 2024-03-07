@@ -23,7 +23,7 @@ public class Home extends JFrame implements ActionListener{
         JButton depositBtn = new JButton("Deposit");
         JButton transferBtn = new JButton("Transfer");
         JButton withdrawalBtn = new JButton("Withdrawal");
-        JButton transactionBtn = new JButton("Transactions");
+        JButton signoutBtn = new JButton("Sign Out");
         JButton profileBtn = new JButton("Profile");
 
         Dimension buttonSize = new Dimension(150, 50);
@@ -31,21 +31,21 @@ public class Home extends JFrame implements ActionListener{
         depositBtn.setPreferredSize(buttonSize);
         transferBtn.setPreferredSize(buttonSize);
         withdrawalBtn.setPreferredSize(buttonSize);
-        transactionBtn.setPreferredSize(buttonSize);
+        signoutBtn.setPreferredSize(buttonSize);
         profileBtn.setPreferredSize(buttonSize);
 
         viewBalanceBtn.addActionListener(this);
         depositBtn.addActionListener(this);
         transferBtn.addActionListener(this);
         withdrawalBtn.addActionListener(this);
-        transactionBtn.addActionListener(this);
+        signoutBtn.addActionListener(this);
         profileBtn.addActionListener(this);
 
         buttonPanel.add(viewBalanceBtn);
         buttonPanel.add(depositBtn);
         buttonPanel.add(transferBtn);
         buttonPanel.add(withdrawalBtn);
-        buttonPanel.add(transactionBtn);
+        buttonPanel.add(signoutBtn);
         buttonPanel.add(profileBtn);
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
 
@@ -124,9 +124,9 @@ public class Home extends JFrame implements ActionListener{
             setVisible(false);
             String UserName = getUserNameFromDatabase();
             new Withdrawal(UserName);
-        } else if (source.getText().equals("Transactions")) {
-            setVisible(false);
-            new Transactions();
+        } else if (source.getText().equals("Sign Out")) {
+            // setVisible(false);
+            // new SignOut();
         } else if (source.getText().equals("Profile")) {
             String UserName = getUserNameFromDatabase();
             setVisible(false);
