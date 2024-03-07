@@ -64,27 +64,52 @@ public class Transfer extends JFrame {
 
                 // Connect to the database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankappdb", "root", "");
-                // Retrieve the current balance
-                double currentBalance = getCurrentBalance(UserName, conn);
-                // Check if the balance is sufficient for the transfer
-                if (currentBalance < amount) {
+                // Retrieve the receiver's username using the receiver's account number
+                String receiverUserName = getUserNameFromAccountNumber(toAccount, conn);
+                // Check if the receiver's username is found
+                if (receiverUserName == null) {
+                    JOptionPane.showMessageDialog(this, "Receiver account not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // Retrieve the sender's balance
+                double senderBalance = getCurrentBalance(UserName, conn);
+                // Retrieve the receiver's balance
+                double receiverBalance = getCurrentBalance(receiverUserName, conn);
+                // Check if the sender has sufficient balance
+                if (senderBalance < amount) {
                     JOptionPane.showMessageDialog(this, "Insufficient balance", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                // Update the balance after transfer
-                double newBalance = currentBalance - amount;
-                updateBalance(UserName, newBalance, conn);
-                // Close the database connection
+                // Update sender's balance
+                double newSenderBalance = senderBalance - amount;
+                updateBalance(UserName, newSenderBalance, conn);
+                // Update receiver's balance
+                double newReceiverBalance = receiverBalance + amount;
+                updateBalance(receiverUserName, newReceiverBalance, conn);
                 conn.close();
-
-                JOptionPane.showMessageDialog(this, "Transfer successful. New balance: $" + newBalance, "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Transfer successful. New balance: $" + newSenderBalance, "Success", JOptionPane.INFORMATION_MESSAGE);
                 toAccountField.setText("");
                 amountField.setText("");
                 dispose();
+                setVisible(true);
+                new Home();
             } catch (NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private String getUserNameFromAccountNumber(String accountNumber, Connection conn) throws SQLException {
+        String userName = null;
+        String query = "SELECT UserName FROM users WHERE AccountNumber = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, accountNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                userName = rs.getString("UserName");
+            }
+        }
+        return userName;
     }
 
     private double getCurrentBalance(String UserName, Connection conn) throws SQLException {

@@ -4,21 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Deposit extends JFrame {
     JLabel accountbalanceLabel = new JLabel("Account balance:");
-    JLabel accountBalance = new JLabel("$30,000"); // Assuming this is the initial balance
+    JLabel accountBalance; // Will be initialized with the current balance from the database
     JLabel amountTobeDepositedLabel = new JLabel("Deposit:");
     JTextField amountTobeDeposited = new JTextField(3);
 
     Connection conn;
 
-    public Deposit() {
+    public Deposit(String UserName) {
         try {
             // Establish connection to the database
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankappdb", "root", "");
@@ -28,6 +24,9 @@ public class Deposit extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Initialize account balance label with the current balance from the database
+        accountBalance = new JLabel("Account balance: $" + getCurrentBalance(UserName));
 
         setVisible(true);
         setTitle("Deposit");
@@ -52,33 +51,53 @@ public class Deposit extends JFrame {
         depositButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                depositMoney();
+                depositMoney(UserName);
             }
         });
         buttonPanel.add(depositButton);
     }
 
-    private void depositMoney() {
+    private double getCurrentBalance(String UserName) {
+        double balance = 0;
+        try {
+            // Create and execute SQL query to retrieve balance for the given username
+            String query = "SELECT Balance FROM users WHERE UserName = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, UserName);
+            ResultSet rs = stmt.executeQuery();
+
+            // If the result set has a record, get the balance value
+            if (rs.next()) {
+                balance = rs.getDouble("Balance");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return balance;
+    }
+
+    private void depositMoney(String UserName) {
         if (amountTobeDeposited.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please input an amount to be deposited", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 double amount = Double.parseDouble(amountTobeDeposited.getText());
-                System.out.println(amount);
-
 
                 // Get the current balance from the label
-                double currentBalance = Double.parseDouble(accountBalance.getText().substring(1));
-                System.out.println(amount);
+                String[] parts = accountBalance.getText().split("\\s+");
+                double currentBalance = Double.parseDouble(parts[parts.length - 1].substring(1));
+//
+//                double currentBalance = Double.parseDouble(accountBalance.getText().substring(17)); // Extract the balance value
+//                System.out.println(amount);
 
                 // Calculate the new balance after deposit
                 double newBalance = currentBalance + amount;
 
                 // Update the balance label
-                accountBalance.setText("$" + newBalance);
+                accountBalance.setText("Account balance: $" + newBalance);
 
                 // Update the balance in the database
-                updateBalanceInDatabase(newBalance);
+                updateBalanceInDatabase(UserName, newBalance);
 
                 JOptionPane.showMessageDialog(this, "Deposited $" + amount);
 
@@ -95,12 +114,19 @@ public class Deposit extends JFrame {
         }
     }
 
-    private void updateBalanceInDatabase(double newBalance) throws SQLException {
+    private void updateBalanceInDatabase(String UserName, double newBalance) throws SQLException {
         // Create a prepared statement to update the balance in the database
-        String query = "UPDATE users SET Balance = ? WHERE Username = ?";
+        String query = "UPDATE users SET Balance = ? WHERE UserName = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setDouble(1, newBalance);
-        stmt.executeUpdate();
+        stmt.setString(2, UserName);
+        int rowsAffected = stmt.executeUpdate();
+        if (rowsAffected > 0) {
+            conn.commit(); // Commit the transaction if the update was successful
+        } else {
+            conn.rollback(); // Rollback the transaction if no rows were affected
+        }
+//        stmt.executeUpdate();
     }
 
     @Override
@@ -119,4 +145,3 @@ public class Deposit extends JFrame {
         new Home();
     }
 }
-

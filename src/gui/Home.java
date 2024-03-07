@@ -114,15 +114,16 @@ public class Home extends JFrame implements ActionListener{
             new  ViewBalance();
         } else if (source.getText().equals("Deposit")) {
             setVisible(false);
-            new Deposit();
+            String UserName = getUserNameFromDatabase();
+            new Deposit(UserName);
         } else if (source.getText().equals("Transfer")) {
             setVisible(false);
             String UserName = getUserNameFromDatabase();
-
             new Transfer(UserName);
         } else if (source.getText().equals("Withdrawal")) {
             setVisible(false);
-            new Withdrawal();
+            String UserName = getUserNameFromDatabase();
+            new Withdrawal(UserName);
         } else if (source.getText().equals("Transactions")) {
             setVisible(false);
             new Transactions();
