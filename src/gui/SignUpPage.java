@@ -7,10 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.net.URL;
 import javax.imageio.ImageIO;
-
-
 
 public class SignUpPage extends JFrame implements ActionListener {
 
@@ -18,7 +17,7 @@ public class SignUpPage extends JFrame implements ActionListener {
     private JPasswordField PasswordField;
     private JButton signupButton, loginButton;
     private JLabel FirstNameLabel, LastNameLabel, UserNameLabel, PasswordLabel, EmailLabel;
-    private JPanel panel,Imgpanel;
+    private JPanel panel, Imgpanel;
 
     Connection conn;
     Statement st;
@@ -30,7 +29,6 @@ public class SignUpPage extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(500, 250);
         setResizable(false);
-
 
         panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
@@ -49,7 +47,6 @@ public class SignUpPage extends JFrame implements ActionListener {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
 
         FirstNameLabel = new JLabel("First Name:");
         LastNameLabel = new JLabel("Last Name:");
@@ -106,7 +103,9 @@ public class SignUpPage extends JFrame implements ActionListener {
                     // Validations passed, proceed to database insertion
                     loadSql();
                     try {
-                        String query = "INSERT INTO users (FirstName, LastName, UserName, Email, Password) VALUES('" + FirstName + "','" + LastName + "','" + UserName + "','" + Email + "','" + Password + "')";
+                        // Generate a random account number
+                        String AccountNumber = generateAccountNumber();
+                        String query = "INSERT INTO users (FirstName, LastName, UserName, Email, Password, AccountNumber) VALUES('" + FirstName + "','" + LastName + "','" + UserName + "','" + Email + "','" + Password + "','" + AccountNumber + "')";
                         st.execute(query);
                         dispose();
                         setVisible(false);
@@ -124,7 +123,7 @@ public class SignUpPage extends JFrame implements ActionListener {
         }
     }
 
-    public void loadSql() {
+    private void loadSql() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankappdb", "root", "");
@@ -133,5 +132,14 @@ public class SignUpPage extends JFrame implements ActionListener {
             e.printStackTrace();
         }
     }
- 
+
+    // Generate a random 10-digit account number
+    private String generateAccountNumber() {
+        Random random = new Random();
+        StringBuilder AccountNumber = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            AccountNumber.append(random.nextInt(10));
+        }
+        return AccountNumber.toString();
+    }
 }

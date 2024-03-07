@@ -1,15 +1,18 @@
 package gui;
 
+
  import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+ import java.sql.*;
+
 public class Home extends JFrame implements ActionListener{
 
     public Home() {
         setVisible(true);
         setLocation(500,250);
         setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(2);
         setSize(500, 189);
         setTitle("GTB Bank");
 
@@ -61,6 +64,43 @@ public class Home extends JFrame implements ActionListener{
                 // }
             }
         });
+
+    }
+
+    private String getUserNameFromDatabase() {
+        String UserName = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish connection to the database
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankappdb", "root", "");
+
+            // Create and execute SQL query to retrieve username
+            String query = "SELECT UserName FROM users WHERE id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, 1);
+            rs = stmt.executeQuery();
+
+            // If the result set has a record, get the username value
+            if (rs.next()) {
+                UserName = rs.getString("UserName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return UserName;
     }
 
     @Override
@@ -68,13 +108,18 @@ public class Home extends JFrame implements ActionListener{
         JButton source = (JButton)e.getSource();
         if (source.getText().equals("View Balance")) {
             setVisible(false);
-          new ViewBalance();
+            String UserName = getUserNameFromDatabase();
+            dispose();
+            ViewBalance.username = UserName;
+            new  ViewBalance();
         } else if (source.getText().equals("Deposit")) {
             setVisible(false);
             new Deposit();
         } else if (source.getText().equals("Transfer")) {
             setVisible(false);
-             new Transfer();
+            String UserName = getUserNameFromDatabase();
+
+            new Transfer(UserName);
         } else if (source.getText().equals("Withdrawal")) {
             setVisible(false);
             new Withdrawal();
@@ -82,11 +127,10 @@ public class Home extends JFrame implements ActionListener{
             setVisible(false);
             new Transactions();
         } else if (source.getText().equals("Profile")) {
+            String UserName = getUserNameFromDatabase();
             setVisible(false);
-            new Profile();
+            new Profile(UserName);
         }
     }
-
- 
 
 }
