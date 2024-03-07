@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 import java.net.URL;
-import javax.imageio.ImageIO;
 
 public class SignUpPage extends JFrame implements ActionListener {
 
@@ -23,23 +22,23 @@ public class SignUpPage extends JFrame implements ActionListener {
     Statement st;
 
     public SignUpPage() {
-
         setTitle("Signup");
-        setSize(400, 300);
+        setSize(400, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(500, 250);
+        setLocationRelativeTo(null);
         setResizable(false);
-
+      
         panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
-
+        // panel.setBackground(new Color(255, 165, 0)); 
         Imgpanel = new JPanel();
+        Imgpanel.setPreferredSize(new Dimension(400, 400));
 
         try {
-            URL imageUrl = getClass().getResource("src/images/logo.png");
+            URL imageUrl = getClass().getResource("/images/logo.png"); // Corrected resource path
             if (imageUrl != null) {
-                Image img = ImageIO.read(imageUrl);
-                JLabel imageLabel = new JLabel(new ImageIcon(img));
+                ImageIcon image = new ImageIcon(imageUrl);
+                JLabel imageLabel = new JLabel(image);
                 Imgpanel.add(imageLabel);
             } else {
                 System.err.println("Image not found.");
@@ -61,17 +60,21 @@ public class SignUpPage extends JFrame implements ActionListener {
         EmailField = new JTextField();
         signupButton = new JButton("Signup");
         loginButton = new JButton("Login");
-
+        loginButton.setBackground(new Color(255, 50, 0));
+        loginButton.setForeground(Color.white);
+        signupButton.setBackground(new Color(255, 50, 0));
+        signupButton.setForeground(Color.white);
+        // loginButton.setBackground(new Color(255, 50, 0));
+        loginButton.setPreferredSize(new Dimension(0, 35));
         signupButton.addActionListener(this);
-        // Add action listener to the signupButton
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Open the sign-up page when signinButton is clicked
                 new SignInPage().setVisible(true);
-                dispose(); // Close the current window
+                dispose();
             }
         });
+
         panel.add(FirstNameLabel);
         panel.add(FirstNameField);
         panel.add(LastNameLabel);
@@ -84,9 +87,18 @@ public class SignUpPage extends JFrame implements ActionListener {
         panel.add(PasswordField);
         panel.add(signupButton);
         panel.add(loginButton);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // Use BorderLayout to properly position panels
+        setLayout(new BorderLayout());
+        JPanel spacePanel = new JPanel();
+        spacePanel.setPreferredSize(new Dimension(400, 10)); // Adjust the height as needed
+        
+        // Use BorderLayout to properly position panels
+        setLayout(new BorderLayout());
+        add(Imgpanel, BorderLayout.NORTH);
+        add(spacePanel, BorderLayout.CENTER);
+        add(panel, BorderLayout.SOUTH);
         setVisible(true);
-        add(Imgpanel);
-        add(panel);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -97,15 +109,15 @@ public class SignUpPage extends JFrame implements ActionListener {
             String Email = EmailField.getText();
             String Password = new String(PasswordField.getPassword());
 
-            if (!FirstName.isEmpty() && !LastName.isEmpty() && !UserName.isEmpty() && !Password.isEmpty() && !Email.isEmpty()) {
-                // All fields are filled
+            if (!FirstName.isEmpty() && !LastName.isEmpty() && !UserName.isEmpty() && !Password.isEmpty()
+                    && !Email.isEmpty()) {
                 if (Password.length() >= 3 && Email.endsWith("@gmail.com") && Email.length() >= 3) {
-                    // Validations passed, proceed to database insertion
                     loadSql();
                     try {
-                        // Generate a random account number
                         String AccountNumber = generateAccountNumber();
-                        String query = "INSERT INTO users (FirstName, LastName, UserName, Email, Password, AccountNumber) VALUES('" + FirstName + "','" + LastName + "','" + UserName + "','" + Email + "','" + Password + "','" + AccountNumber + "')";
+                        String query = "INSERT INTO users (FirstName, LastName, UserName, Email, Password, AccountNumber) VALUES('"
+                                + FirstName + "','" + LastName + "','" + UserName + "','" + Email + "','" + Password
+                                + "','" + AccountNumber + "')";
                         st.execute(query);
                         dispose();
                         setVisible(false);
@@ -133,7 +145,6 @@ public class SignUpPage extends JFrame implements ActionListener {
         }
     }
 
-    // Generate a random 10-digit account number
     private String generateAccountNumber() {
         Random random = new Random();
         StringBuilder AccountNumber = new StringBuilder();
@@ -142,4 +153,5 @@ public class SignUpPage extends JFrame implements ActionListener {
         }
         return AccountNumber.toString();
     }
+
 }
