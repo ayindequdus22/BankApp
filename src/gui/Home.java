@@ -102,6 +102,11 @@ public class Home extends JFrame implements ActionListener{
 
         return UserName;
     }
+    private void signOut() {
+        dispose();
+        new SignInPage();
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -126,7 +131,7 @@ public class Home extends JFrame implements ActionListener{
             new Withdrawal(UserName);
         } else if (source.getText().equals("Sign Out")) {
             // setVisible(false);
-            // new SignOut();
+             signOut();
         } else if (source.getText().equals("Profile")) {
             String UserName = getUserNameFromDatabase();
             setVisible(false);
