@@ -138,5 +138,8 @@ public class Home extends JFrame implements ActionListener{
             new Profile(UserName);
         }
     }
-
+public static void main(String[] args) {
+    
+   new Home();
+}
 }

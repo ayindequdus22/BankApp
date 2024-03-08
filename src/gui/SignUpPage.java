@@ -153,5 +153,4 @@ public class SignUpPage extends JFrame implements ActionListener {
         }
         return AccountNumber.toString();
     }
-
 }

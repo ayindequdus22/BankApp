@@ -91,7 +91,7 @@ public class Transfer extends JFrame {
                 toAccountField.setText("");
                 amountField.setText("");
                 dispose();
-                setVisible(true);
+                setVisible(false);
                 new Home();
             } catch (NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -132,5 +132,10 @@ public class Transfer extends JFrame {
             stmt.setString(2, UserName);
             stmt.executeUpdate();
         }
+    }
+    @Override
+    public void dispose() {
+        super.dispose();
+        new Home();
     }
 }
