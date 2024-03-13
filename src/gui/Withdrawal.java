@@ -21,22 +21,21 @@ public class Withdrawal extends JFrame implements ActionListener {
         withdrawButton = new JButton("Withdraw");
 
         withdrawButton.addActionListener(this);
-          setVisible(true);
-
         setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
         setResizable(false);
-        setVisible(true);
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-     JPanel navBar = new JPanel();
-        navBar.setBackground(new Color(255, 216, 230));
+        JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 250, 250));
         navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
         navBar.setLayout(new BorderLayout());
-        titleLabel= new JLabel("WithDrawal");
+        titleLabel= new JLabel("Profile");
         exitButton = new JButton("Back");
         exitButton.setForeground(Color.WHITE);
         exitButton.setFocusPainted(false);
+        exitButton.setBackground(new Color(255, 50, 0));
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,9 +52,11 @@ public class Withdrawal extends JFrame implements ActionListener {
 
         JPanel btnPanel = new JPanel();
         btnPanel.add(withdrawButton);
+        add(navBar,BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
 
-        add(mainPanel, BorderLayout.NORTH);
         add(btnPanel, BorderLayout.SOUTH);
+        setVisible(true);
     }
 
     @Override

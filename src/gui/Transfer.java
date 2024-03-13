@@ -14,22 +14,21 @@ public class Transfer extends JFrame {
     private String UserName;
 private JLabel titleLabel;
     public Transfer(String UserName) {
-               setVisible(true);
-
         setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
         setResizable(false);
-        setVisible(true);
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-     JPanel navBar = new JPanel();
-        navBar.setBackground(new Color(255, 216, 230));
+        JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 250, 250));
         navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
         navBar.setLayout(new BorderLayout());
         titleLabel= new JLabel("Transfer");
         exitButton = new JButton("Back");
         exitButton.setForeground(Color.WHITE);
         exitButton.setFocusPainted(false);
+        exitButton.setBackground(new Color(255, 50, 0));
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,11 +38,12 @@ private JLabel titleLabel;
         navBar.add(titleLabel, BorderLayout.WEST);
         navBar.add(exitButton, BorderLayout.EAST);
 
-        add(navBar);
+
         this.UserName = UserName;
         JPanel mainPanel = new JPanel(new GridLayout(4, 2));
         JPanel buttonPanel = new JPanel();
-        add(mainPanel);
+        add(navBar, BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         JLabel toLabel = new JLabel("To Account:");
@@ -59,7 +59,7 @@ private JLabel titleLabel;
         transferButton.setPreferredSize(new Dimension(400, 30));
 
         buttonPanel.add(transferButton);
-
+setVisible(true);
         transferButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 transferMoney();

@@ -11,32 +11,32 @@ public class Profile extends JFrame implements ActionListener{
     private JButton exitButton;
 private JLabel titleLabel;
         public Profile(String UserName) {
-       setVisible(true);
+            setUndecorated(true);
+            setSize(400, 300);
+            setLocation(500, 250);
+            setResizable(false);
 
-        setUndecorated(true);
-        setSize(400, 300);
-        setLocation(500, 250);
-        setResizable(false);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-     JPanel navBar = new JPanel();
-        navBar.setBackground(new Color(255, 216, 230));
-        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
-        navBar.setLayout(new BorderLayout());
-        titleLabel= new JLabel("Profile");
-        exitButton = new JButton("Back");
-        exitButton.setForeground(Color.WHITE);
-        exitButton.setFocusPainted(false);
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-        navBar.add(titleLabel, BorderLayout.WEST);
-        navBar.add(exitButton, BorderLayout.EAST);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            JPanel navBar = new JPanel();
+            navBar.setBackground(new Color(255, 250, 250));
+            navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+            navBar.setLayout(new BorderLayout());
+            titleLabel= new JLabel("Profile");
+            exitButton = new JButton("Back");
+            exitButton.setForeground(Color.WHITE);
+            exitButton.setFocusPainted(false);
+            exitButton.setBackground(new Color(255, 50, 0));
+            exitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+            navBar.add(titleLabel, BorderLayout.WEST);
+            navBar.add(exitButton, BorderLayout.EAST);
 
-        add(navBar);
+
+
         JPanel mainPanel = new JPanel(new GridLayout(4, 2));
 
         // Get user data from the database
@@ -51,11 +51,9 @@ private JLabel titleLabel;
         mainPanel.add(new JLabel(userData[2])); // Display user's account number
         mainPanel.add(new JLabel("Balance:"));
         mainPanel.add(new JLabel(userData[3])); // Display user's balance
-
-        add(mainPanel);
-
-        setVisible(true);
-        setResizable(false);
+            add(navBar, BorderLayout.NORTH);
+            add(mainPanel, BorderLayout.CENTER);
+            setVisible(true);
     }
 
     @Override
@@ -118,6 +116,6 @@ private JLabel titleLabel;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-System.out.println("Profile");    }
-
+System.out.println("Profile");
+        }
 }

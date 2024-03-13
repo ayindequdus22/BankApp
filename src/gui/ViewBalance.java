@@ -21,12 +21,13 @@ public  static String username = null;
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       JPanel navBar = new JPanel();
-        navBar.setBackground(new Color(255, 216, 230));
+      navBar.setBackground(new Color(255, 250, 250));
         navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
         navBar.setLayout(new BorderLayout());
         titleLabel= new JLabel("View Balance");
         exitButton = new JButton("Back");
         exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(new Color(255, 50, 0));
         exitButton.setFocusPainted(false);
         exitButton.addActionListener(new ActionListener() {
             @Override
@@ -43,7 +44,7 @@ public  static String username = null;
 
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        add(navBar);
+        add(navBar, BorderLayout.NORTH);
         add(mainPanel);
 
         balanceLabel = new JLabel("Your balance is: " );

@@ -31,20 +31,20 @@ public class Deposit extends JFrame implements ActionListener{
         // Initialize account balance label with the current balance from the database
         accountBalance = new JLabel("Account balance: $" + getCurrentBalance(UserName));
 
-        setVisible(true);
+
 
         setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
         setResizable(false);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
      JPanel navBar = new JPanel();
-        navBar.setBackground(new Color(255, 216, 230));
+     navBar.setBackground(new Color(255, 250, 250));
         navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
         navBar.setLayout(new BorderLayout());
         titleLabel= new JLabel("Deposit");
         exitButton = new JButton("Back");
+        exitButton.setBackground(new Color(255, 50, 0));
         exitButton.setForeground(Color.WHITE);
         exitButton.setFocusPainted(false);
         exitButton.addActionListener(new ActionListener() {
@@ -59,7 +59,9 @@ public class Deposit extends JFrame implements ActionListener{
 
         JPanel mainPanel = new JPanel(new GridLayout(3, 2));
         JPanel buttonPanel = new JPanel();
+        add(navBar, BorderLayout.NORTH);
         add(mainPanel);
+
         add(buttonPanel, BorderLayout.SOUTH);
 
         mainPanel.add(accountbalanceLabel);
@@ -76,6 +78,7 @@ public class Deposit extends JFrame implements ActionListener{
             }
         });
         buttonPanel.add(depositButton);
+        setVisible(true);
     }
 
     private double getCurrentBalance(String UserName) {
