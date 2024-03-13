@@ -1,17 +1,20 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Deposit extends JFrame {
+public class Deposit extends JFrame implements ActionListener{
     JLabel accountbalanceLabel = new JLabel("Account balance:");
     JLabel accountBalance; // Will be initialized with the current balance from the database
     JLabel amountTobeDepositedLabel = new JLabel("Deposit:");
     JTextField amountTobeDeposited = new JTextField(3);
-
+    private JLabel titleLabel;
+    private JButton exitButton;
     Connection conn;
 
     public Deposit(String UserName) {
@@ -29,12 +32,30 @@ public class Deposit extends JFrame {
         accountBalance = new JLabel("Account balance: $" + getCurrentBalance(UserName));
 
         setVisible(true);
-        setTitle("Deposit");
+
+        setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
-        setVisible(true);
         setResizable(false);
+        setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+     JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 216, 230));
+        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+        navBar.setLayout(new BorderLayout());
+        titleLabel= new JLabel("Deposit");
+        exitButton = new JButton("Back");
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        navBar.add(titleLabel, BorderLayout.WEST);
+        navBar.add(exitButton, BorderLayout.EAST);
+
 
         JPanel mainPanel = new JPanel(new GridLayout(3, 2));
         JPanel buttonPanel = new JPanel();
@@ -142,6 +163,11 @@ public class Deposit extends JFrame {
             e.printStackTrace();
         }
         super.dispose(); // Call the superclass method
+       setVisible(false);
         new Home();
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    System.out.println("view balance");    
     }
 }

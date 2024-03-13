@@ -2,23 +2,48 @@ package gui;
 import gui.Home;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class ViewBalance extends JFrame {
+public class ViewBalance extends JFrame implements ActionListener{
 public  static String username = null;
-    private JLabel balanceLabel;
-
+    private JLabel balanceLabel,titleLabel;
+    private JButton exitButton;
     public ViewBalance() {
-        setTitle("View Balance");
+        setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        setDefaultCloseOperation(2);
+      JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 216, 230));
+        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+        navBar.setLayout(new BorderLayout());
+        titleLabel= new JLabel("View Balance");
+        exitButton = new JButton("Back");
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        navBar.add(titleLabel, BorderLayout.WEST);
+        navBar.add(exitButton, BorderLayout.EAST);
+
+
+
+
+
 
         JPanel mainPanel = new JPanel(new BorderLayout());
+        add(navBar);
         add(mainPanel);
 
         balanceLabel = new JLabel("Your balance is: " );
@@ -56,7 +81,12 @@ public  static String username = null;
 
     @Override
     public void dispose() {
-        super.dispose();
+        super.dispose();setVisible(false);
         new Home();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    System.out.println("view balance");    
     }
 }

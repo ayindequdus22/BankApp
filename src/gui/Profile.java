@@ -1,16 +1,42 @@
 package gui;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Profile extends JFrame {
+public class Profile extends JFrame implements ActionListener{
+    private JButton exitButton;
+private JLabel titleLabel;
+        public Profile(String UserName) {
+       setVisible(true);
 
-    public Profile(String UserName) {
-        setTitle("Profile");
+        setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+     JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 216, 230));
+        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+        navBar.setLayout(new BorderLayout());
+        titleLabel= new JLabel("Profile");
+        exitButton = new JButton("Back");
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        navBar.add(titleLabel, BorderLayout.WEST);
+        navBar.add(exitButton, BorderLayout.EAST);
+
+        add(navBar);
         JPanel mainPanel = new JPanel(new GridLayout(4, 2));
 
         // Get user data from the database
@@ -89,5 +115,9 @@ public class Profile extends JFrame {
 
         return userData;
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+System.out.println("Profile");    }
 
 }

@@ -15,9 +15,9 @@ public class SignInPage extends JFrame implements ActionListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
-    private JButton loginButton, signupButton;
+    private JButton submitButton, signupButton;
     private JLabel usernameLabel, passwordLabel;
-    private JPanel panel, Imgpanel;
+    private JPanel panel, Imgpanel,buttonPanel;
 
 
     Connection conn;
@@ -32,15 +32,19 @@ public class SignInPage extends JFrame implements ActionListener {
         setResizable(false);
         setLayout(new BorderLayout());
         panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
+        panel.setLayout(new GridLayout(2, 2));
         Imgpanel = new JPanel();
+        buttonPanel = new JPanel();
+ JPanel spacePanel = new JPanel();
+        spacePanel.setPreferredSize(new Dimension(400, 40)); // Adjust the height as needed
         Imgpanel.setPreferredSize(new Dimension(400, 400));
    try {
             URL imageUrl = getClass().getResource("/images/logo.png"); // Corrected resource path
             if (imageUrl != null) {
                 ImageIcon image = new ImageIcon(imageUrl);
                 JLabel imageLabel = new JLabel(image);
-                Imgpanel.add(imageLabel);
+                Imgpanel.add(imageLabel, BorderLayout.CENTER);
+                Imgpanel.add(spacePanel, BorderLayout.CENTER);
             } else {
                 System.err.println("Image not found.");
             }
@@ -51,16 +55,18 @@ public class SignInPage extends JFrame implements ActionListener {
         usernameLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
         usernameField = new JTextField();
-        usernameField.setPreferredSize(new Dimension(200, 60));
         passwordField = new JPasswordField();
-        loginButton = new JButton("Login");
+
+        submitButton = new JButton("Submit");
         signupButton = new JButton("Signup");
-        loginButton.setBackground(new Color(255, 50, 0));
-        loginButton.setForeground(Color.white);
+        submitButton.setBackground(new Color(255, 50, 0));
+        submitButton.setForeground(Color.white);
         signupButton.setBackground(new Color(255, 50, 0));
         signupButton.setForeground(Color.white);
+        signupButton.setPreferredSize(new Dimension(200, 20));
+        submitButton.setPreferredSize(new Dimension(200, 20));
 
-        loginButton.addActionListener(this);
+        submitButton.addActionListener(this);
         // Add action listener to the signupButton
         signupButton.addActionListener(new ActionListener() {
             @Override
@@ -74,20 +80,32 @@ public class SignInPage extends JFrame implements ActionListener {
         panel.add(usernameField);
         panel.add(passwordLabel);
         panel.add(passwordField);
-        panel.add(loginButton);
-        panel.add(signupButton);
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // Set BoxLayout with Y_AXIS alignment
+
+        // Add rigid area to create space between buttons
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Adjust the height as needed
+        
+        // Add buttons with centered alignment
+        submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signupButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitButton.setPreferredSize(new Dimension(200, 40));
+        signupButton.setPreferredSize(new Dimension(200, 40));
+        // Add buttons to buttonPanel
+        buttonPanel.add(submitButton);
+        buttonPanel.add(signupButton);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
         setVisible(true);
       
-        JPanel spacePanel = new JPanel();
-        spacePanel.setPreferredSize(new Dimension(400, 10)); // Adjust the height as needed
+       
         setLayout(new BorderLayout());
         add(Imgpanel, BorderLayout.NORTH);
-        add(spacePanel, BorderLayout.CENTER);
-        add(panel, BorderLayout.SOUTH);
+        add(panel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginButton) {
+        if (e.getSource() == submitButton) {
             String UserName = usernameField.getText();
             String Password = new String(passwordField.getPassword());
 

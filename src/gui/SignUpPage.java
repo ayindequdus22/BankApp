@@ -14,9 +14,9 @@ public class SignUpPage extends JFrame implements ActionListener {
 
     private JTextField FirstNameField, LastNameField, UserNameField, EmailField;
     private JPasswordField PasswordField;
-    private JButton signupButton, loginButton;
+    private JButton submitBtn, loginButton;
     private JLabel FirstNameLabel, LastNameLabel, UserNameLabel, PasswordLabel, EmailLabel;
-    private JPanel panel, Imgpanel;
+    private JPanel panel, Imgpanel,buttonPanel;
 
     Connection conn;
     Statement st;
@@ -29,7 +29,8 @@ public class SignUpPage extends JFrame implements ActionListener {
         setResizable(false);
       
         panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 2));
+        buttonPanel  = new JPanel();
+        panel.setLayout(new GridLayout(6, 2));
         // panel.setBackground(new Color(255, 165, 0)); 
         Imgpanel = new JPanel();
         Imgpanel.setPreferredSize(new Dimension(400, 400));
@@ -58,15 +59,14 @@ public class SignUpPage extends JFrame implements ActionListener {
         UserNameField = new JTextField();
         PasswordField = new JPasswordField();
         EmailField = new JTextField();
-        signupButton = new JButton("Signup");
+        submitBtn = new JButton("Submit");
         loginButton = new JButton("Login");
         loginButton.setBackground(new Color(255, 50, 0));
         loginButton.setForeground(Color.white);
-        signupButton.setBackground(new Color(255, 50, 0));
-        signupButton.setForeground(Color.white);
-        // loginButton.setBackground(new Color(255, 50, 0));
-        loginButton.setPreferredSize(new Dimension(0, 35));
-        signupButton.addActionListener(this);
+        submitBtn.setBackground(new Color(255, 50, 0));
+        submitBtn.setForeground(Color.white);
+        loginButton.setBackground(new Color(255, 50, 0));
+        submitBtn.addActionListener(this);
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,24 +85,33 @@ public class SignUpPage extends JFrame implements ActionListener {
         panel.add(EmailField);
         panel.add(PasswordLabel);
         panel.add(PasswordField);
-        panel.add(signupButton);
-        panel.add(loginButton);
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // Use BorderLayout to properly position panels
-        setLayout(new BorderLayout());
-        JPanel spacePanel = new JPanel();
-        spacePanel.setPreferredSize(new Dimension(400, 10)); // Adjust the height as needed
         
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // Set BoxLayout with Y_AXIS alignment
+
+        // Add rigid area to create space between buttons
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Adjust the height as needed
+        
+        // Add buttons with centered alignment
+        submitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitBtn.setPreferredSize(new Dimension(200, 40));
+        loginButton.setPreferredSize(new Dimension(200, 40));
+        // Add buttons to buttonPanel
+        buttonPanel.add(submitBtn);
+        buttonPanel.add(loginButton);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        setLayout(new BorderLayout());
         // Use BorderLayout to properly position panels
         setLayout(new BorderLayout());
         add(Imgpanel, BorderLayout.NORTH);
-        add(spacePanel, BorderLayout.CENTER);
-        add(panel, BorderLayout.SOUTH);
+        add(panel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == signupButton) {
+        if (e.getSource() == submitBtn) {
             String FirstName = FirstNameField.getText();
             String LastName = LastNameField.getText();
             String UserName = UserNameField.getText();
@@ -154,3 +163,4 @@ public class SignUpPage extends JFrame implements ActionListener {
         return AccountNumber.toString();
     }
 }
+

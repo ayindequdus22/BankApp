@@ -1,15 +1,17 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class Withdrawal extends JFrame implements ActionListener {
-    private JLabel amountLabel;
+    private JLabel amountLabel,titleLabel;
     private JTextField amountField;
-    private JButton withdrawButton;
+    private JButton withdrawButton,exitButton;
     private String userName; // Variable to store the username
 
     public Withdrawal(String UserName) {
@@ -19,13 +21,30 @@ public class Withdrawal extends JFrame implements ActionListener {
         withdrawButton = new JButton("Withdraw");
 
         withdrawButton.addActionListener(this);
-        setVisible(true);
-        setTitle("Withdrawal");
+          setVisible(true);
+
+        setUndecorated(true);
         setSize(400, 300);
         setLocation(500, 250);
-        setVisible(true);
         setResizable(false);
+        setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+     JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 216, 230));
+        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+        navBar.setLayout(new BorderLayout());
+        titleLabel= new JLabel("WithDrawal");
+        exitButton = new JButton("Back");
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        navBar.add(titleLabel, BorderLayout.WEST);
+        navBar.add(exitButton, BorderLayout.EAST);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(2, 1));

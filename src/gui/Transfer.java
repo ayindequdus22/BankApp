@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -8,18 +10,37 @@ import java.sql.*;
 public class Transfer extends JFrame {
     private JTextField toAccountField;
     private JTextField amountField;
-    private JButton transferButton;
+    private JButton transferButton,exitButton;
     private String UserName;
-
+private JLabel titleLabel;
     public Transfer(String UserName) {
-        this.UserName = UserName;
-        setTitle("Transfer");
-        setSize(400, 200);
+               setVisible(true);
+
+        setUndecorated(true);
+        setSize(400, 300);
         setLocation(500, 250);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+     JPanel navBar = new JPanel();
+        navBar.setBackground(new Color(255, 216, 230));
+        navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
+        navBar.setLayout(new BorderLayout());
+        titleLabel= new JLabel("Transfer");
+        exitButton = new JButton("Back");
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        navBar.add(titleLabel, BorderLayout.WEST);
+        navBar.add(exitButton, BorderLayout.EAST);
 
+        add(navBar);
+        this.UserName = UserName;
         JPanel mainPanel = new JPanel(new GridLayout(4, 2));
         JPanel buttonPanel = new JPanel();
         add(mainPanel);
@@ -138,4 +159,5 @@ public class Transfer extends JFrame {
         super.dispose();
         new Home();
     }
+
 }
