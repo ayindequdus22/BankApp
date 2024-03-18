@@ -31,7 +31,7 @@ public class Withdrawal extends JFrame implements ActionListener {
         navBar.setBackground(new Color(255, 250, 250));
         navBar.setBorder(new EmptyBorder(5, 10, 5, 10));
         navBar.setLayout(new BorderLayout());
-        titleLabel= new JLabel("Profile");
+        titleLabel= new JLabel("Withdrawal");
         exitButton = new JButton("Back");
         exitButton.setForeground(Color.WHITE);
         exitButton.setFocusPainted(false);
