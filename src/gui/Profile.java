@@ -1,7 +1,6 @@
 package gui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,6 +77,7 @@ private JLabel titleLabel;
             String query = "SELECT FirstName, LastName, Email, AccountNumber, Balance FROM users WHERE UserName = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, UserName);
+            System.out.println(UserName);
             rs = stmt.executeQuery();
 
             // If the result set has a record, retrieve user data
